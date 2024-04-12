@@ -1338,7 +1338,7 @@ function main() {
             const adminUrl = core.getInput("SHAREPOINT_ADMIN_URL", { required: true });
             const clientID = core.getInput("CLIENT_ID", { required: true });
             const clientSecret = core.getInput("CLIENT_SECRET", { required: true });
-            const appFilePath = core.getInput("APP_FILE_PATH", { required: true });
+//            const appFilePath = core.getInput("APP_FILE_PATH", { required: true });
 //            const overwrite = core.getInput("OVERWRITE", { required: false }) == "true" ? "-Overwrite" : "";
 //            const scope = core.getInput("SCOPE", { required: false }).toLowerCase() == "site" ? "Site" : "Tenant";
 //            const skipFeatureDeployment = core.getInput("SKIP_FEATURE_DEPLOYMENT", { required: false }) == "true" ? "-SkipFeatureDeployment" : "";
