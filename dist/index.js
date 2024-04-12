@@ -84,7 +84,7 @@ class PowerShellToolRunner {
     static init() {
         return __awaiter(this, void 0, void 0, function* () {
             if (!PowerShellToolRunner.psPath) {
-                PowerShellToolRunner.psPath = yield io_1.which("powershell", true);
+                PowerShellToolRunner.psPath = yield io_1.which("pwsh", true);
             }
         });
     }

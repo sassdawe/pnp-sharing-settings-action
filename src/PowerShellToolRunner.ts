@@ -6,7 +6,7 @@ export default class PowerShellToolRunner {
 
     static async init() {
         if (!PowerShellToolRunner.psPath) {
-            PowerShellToolRunner.psPath = await which("powershell", true);
+            PowerShellToolRunner.psPath = await which("pwsh", true);
         }
     }
 
