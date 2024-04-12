@@ -22,7 +22,7 @@ async function main() {
 
         const script = `$ErrorActionPreference = "Stop";
             $WarningPreference = "SilentlyContinue";
-            Install-Module -Name PnP.PowerShell -Force -Verbose -Scope CurrentUser;
+            Install-Module -Name SharePointPnPPowerShellOnline  -Force -Verbose -Scope CurrentUser;
             Connect-PnPOnline -Url ${adminUrl} -ClientId ${clientID} -ClientSecret ${clientSecret};
             (Get-PnPConnection).Url | Write-Output;`;
 

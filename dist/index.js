@@ -84,7 +84,7 @@ class PowerShellToolRunner {
     static init() {
         return __awaiter(this, void 0, void 0, function* () {
             if (!PowerShellToolRunner.psPath) {
-                PowerShellToolRunner.psPath = yield io_1.which("pwsh", true);
+                PowerShellToolRunner.psPath = yield io_1.which("powershell", true);
             }
         });
     }
@@ -1349,7 +1349,7 @@ function main() {
             yield PowerShellToolRunner_1.default.init();
             const script = `$ErrorActionPreference = "Stop";
             $WarningPreference = "SilentlyContinue";
-            Install-Module -Name PnP.PowerShell -Force -Verbose -Scope CurrentUser;
+            Install-Module -Name SharePointPnPPowerShellOnline  -Force -Verbose -Scope CurrentUser;
             Connect-PnPOnline -Url ${adminUrl} -ClientId ${clientID} -ClientSecret ${clientSecret};
             Get-PnPTenantSite | ft Url, Template, LocaleId, SharingCapability | Write-Output;`;
 
