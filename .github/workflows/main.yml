@@ -16,3 +16,4 @@ jobs:
           SHAREPOINT_ADMIN_URL: 'https://kolislabio-admin.sharepoint.com'
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          SharingCapability_Disabled_Sites: 'https://kolislabio.sharepoint.com/sites/HR, https://kolislabio.sharepoint.com/sites/Development'

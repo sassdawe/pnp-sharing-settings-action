@@ -1338,20 +1338,24 @@ function main() {
             const adminUrl = core.getInput("SHAREPOINT_ADMIN_URL", { required: true });
             const clientID = core.getInput("CLIENT_ID", { required: true });
             const clientSecret = core.getInput("CLIENT_SECRET", { required: true });
-//            const appFilePath = core.getInput("APP_FILE_PATH", { required: true });
-//            const overwrite = core.getInput("OVERWRITE", { required: false }) == "true" ? "-Overwrite" : "";
-//            const scope = core.getInput("SCOPE", { required: false }).toLowerCase() == "site" ? "Site" : "Tenant";
-//            const skipFeatureDeployment = core.getInput("SKIP_FEATURE_DEPLOYMENT", { required: false }) == "true" ? "-SkipFeatureDeployment" : "";
-//            if (!fs_1.existsSync(appFilePath)) {
-//                throw new Error("Please check if the app file path - APP_FILE_PATH - is correct.");
-//            }
+            const sharingCapabilityDisabled = core.getInput("SHARINGCAPABILITY_DISABLED_SITES", { required: false });
+            const sharingCapabilityDisabledSites = sharingCapabilityDisabled ? sharingCapabilityDisabled.split(",") : [];
+            const sharingCapabilityExternalUserSharingOnly = core.getInput("SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES", { required: false });
+            const sharingCapabilityExternalUserSharingOnlySites = sharingCapabilityExternalUserSharingOnly ? sharingCapabilityExternalUserSharingOnly.split(",") : [];
+            const sharingCapabilityExternalAndGuestSharing = core.getInput("SHARINGCAPABILITY_EXTERNALANDGUESTSHARING_SITES", { required: false });
+            const sharingCapabilityExternalAndGuestSharingSites = SharingCapabilityExternalAndGuestSharing ? SharingCapabilityExternalAndGuestSharing.split(",") : [];
+            const sharingCapabilityExistingExternalUserSharingOnly = core.getInput("SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES", { required: false });
+            const sharingCapabilityExistingExternalUserSharingOnlySites = sharingCapabilityExistingExternalUserSharingOnly ? sharingCapabilityExistingExternalUserSharingOnly.split(",") : [];
+
             core.info("ℹ️ Starting something...");
             yield PowerShellToolRunner_1.default.init();
             const script = `$ErrorActionPreference = "Stop";
             $WarningPreference = "SilentlyContinue";
             Install-Module -Name SharePointPnPPowerShellOnline  -Force -Verbose -Scope CurrentUser;
             Connect-PnPOnline -Url ${adminUrl} -ClientId ${clientID} -ClientSecret ${clientSecret};
-            Get-PnPTenantSite | ft Url, Template, LocaleId, SharingCapability | Write-Output;`;
+            Get-PnPTenantSite | ft Url, Template, LocaleId, SharingCapability | Write-Output;
+            "To Disable site count: $(${sharingCapabilityDisabledSites}.count)" | Write-Output;
+            `;
 
             yield PowerShellToolRunner_1.default.executePowerShellScriptBlock(script);
             core.info("✅ Something is successful.");

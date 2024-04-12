@@ -10,6 +10,18 @@ inputs:
   CLIENT_SECRET:
     description: 'Password of the admin'
     required: true
+  SharingCapability_Disabled_Sites:
+    description: 'Disable sharing capability'
+    required: false
+  SharingCapability_ExternalUserSharingOnly_Sites:
+    description: 'Enable sharing capability for external users only'
+    required: false
+  SharingCapability_ExternalUserAndGuestSharing_Sites:
+    description: 'Enable sharing capability for external users and guests'
+    required: false
+  SharingCapability_ExistingExternalUserSharingOnly_Sites:
+    description: 'Enable sharing capability for existing external users only'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
