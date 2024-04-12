@@ -1339,13 +1339,13 @@ function main() {
             const clientID = core.getInput("CLIENT_ID", { required: true });
             const clientSecret = core.getInput("CLIENT_SECRET", { required: true });
             const sharingCapabilityDisabled = core.getInput("SHARINGCAPABILITY_DISABLED_SITES", { required: false });
-            const sharingCapabilityDisabledSites = sharingCapabilityDisabled ? sharingCapabilityDisabled.split(",") : [];
+            //const sharingCapabilityDisabledSites = sharingCapabilityDisabled ? sharingCapabilityDisabled.split(",") : [];
             const sharingCapabilityExternalUserSharingOnly = core.getInput("SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES", { required: false });
-            const sharingCapabilityExternalUserSharingOnlySites = sharingCapabilityExternalUserSharingOnly ? sharingCapabilityExternalUserSharingOnly.split(",") : [];
+            //const sharingCapabilityExternalUserSharingOnlySites = sharingCapabilityExternalUserSharingOnly ? sharingCapabilityExternalUserSharingOnly.split(",") : [];
             const sharingCapabilityExternalAndGuestSharing = core.getInput("SHARINGCAPABILITY_EXTERNALANDGUESTSHARING_SITES", { required: false });
-            const sharingCapabilityExternalAndGuestSharingSites = sharingCapabilityExternalAndGuestSharing ? sharingCapabilityExternalAndGuestSharing.split(",") : [];
+            //const sharingCapabilityExternalAndGuestSharingSites = sharingCapabilityExternalAndGuestSharing ? sharingCapabilityExternalAndGuestSharing.split(",") : [];
             const sharingCapabilityExistingExternalUserSharingOnly = core.getInput("SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES", { required: false });
-            const sharingCapabilityExistingExternalUserSharingOnlySites = sharingCapabilityExistingExternalUserSharingOnly ? sharingCapabilityExistingExternalUserSharingOnly.split(",") : [];
+            //const sharingCapabilityExistingExternalUserSharingOnlySites = sharingCapabilityExistingExternalUserSharingOnly ? sharingCapabilityExistingExternalUserSharingOnly.split(",") : [];
 
             core.info("ℹ️ Starting something...");
             yield PowerShellToolRunner_1.default.init();
@@ -1354,7 +1354,14 @@ function main() {
             Install-Module -Name SharePointPnPPowerShellOnline  -Force -Verbose -Scope CurrentUser;
             Connect-PnPOnline -Url ${adminUrl} -ClientId ${clientID} -ClientSecret ${clientSecret};
             Get-PnPTenantSite | ft Url, Template, LocaleId, SharingCapability | Write-Output;
-            "To Disable site count: $(${sharingCapabilityDisabledSites}.count)" | Write-Output;
+            $sharingCapabilityDisabledSites = if ( 'null' -ne '${sharingCapabilityDisabled}' ) { '${sharingCapabilityDisabled}'.split(",") } else { @() };
+            "To Disable site count: $($sharingCapabilityDisabledSites.count)" | Write-Output;
+            $sharingCapabilityExternalUserSharingOnlySites = if ( 'null' -ne '${sharingCapabilityExternalUserSharingOnly}' ) { '${sharingCapabilityExternalUserSharingOnly}'.split(",") } else { @() };
+            "To ExternalUserSharingOnly site count: $($sharingCapabilityExternalUserSharingOnlySites.count)" | Write-Output;
+            $sharingCapabilityExternalAndGuestSharingSites = if ( 'null' -ne '${sharingCapabilityExternalAndGuestSharing}' ) { '${sharingCapabilityExternalAndGuestSharing}'.split(",") } else { @() };
+            "To ExternalAndGuestSharing site count: $($sharingCapabilityExternalAndGuestSharingSites.count)" | Write-Output;
+            $sharingCapabilityExistingExternalUserSharingOnlySites = if ( 'null' -ne '${sharingCapabilityExistingExternalUserSharingOnly}' ) { '${sharingCapabilityExistingExternalUserSharingOnly}'.split(",") } else { @() };
+            "To ExistingExternalUserSharingOnly site count: $($sharingCapabilityExistingExternalUserSharingOnlySites.count)" | Write-Output;
             `;
 
             yield PowerShellToolRunner_1.default.executePowerShellScriptBlock(script);
