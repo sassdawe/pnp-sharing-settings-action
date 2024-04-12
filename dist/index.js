@@ -1335,30 +1335,25 @@ const PowerShellToolRunner_1 = __importDefault(__webpack_require__(329));
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const siteUrl = core.getInput("SHAREPOINT_SITE_URL", { required: true });
-            const username = core.getInput("ADMIN_USERNAME", { required: true });
-            const password = core.getInput("ADMIN_PASSWORD", { required: true });
+            const adminUrl = core.getInput("SHAREPOINT_ADMIN_URL", { required: true });
+            const clientID = core.getInput("CLIENT_ID", { required: true });
+            const clientSecret = core.getInput("CLIENT_SECRET", { required: true });
             const appFilePath = core.getInput("APP_FILE_PATH", { required: true });
-            const overwrite = core.getInput("OVERWRITE", { required: false }) == "true" ? "-Overwrite" : "";
-            const scope = core.getInput("SCOPE", { required: false }).toLowerCase() == "site" ? "Site" : "Tenant";
-            const skipFeatureDeployment = core.getInput("SKIP_FEATURE_DEPLOYMENT", { required: false }) == "true" ? "-SkipFeatureDeployment" : "";
-            if (!fs_1.existsSync(appFilePath)) {
-                throw new Error("Please check if the app file path - APP_FILE_PATH - is correct.");
-            }
-            core.info("ℹ️ Starting deployment...");
+//            const overwrite = core.getInput("OVERWRITE", { required: false }) == "true" ? "-Overwrite" : "";
+//            const scope = core.getInput("SCOPE", { required: false }).toLowerCase() == "site" ? "Site" : "Tenant";
+//            const skipFeatureDeployment = core.getInput("SKIP_FEATURE_DEPLOYMENT", { required: false }) == "true" ? "-SkipFeatureDeployment" : "";
+//            if (!fs_1.existsSync(appFilePath)) {
+//                throw new Error("Please check if the app file path - APP_FILE_PATH - is correct.");
+//            }
+            core.info("ℹ️ Starting something...");
             yield PowerShellToolRunner_1.default.init();
-            const script = `$ErrorActionPreference = "Stop"
-            $WarningPreference = "SilentlyContinue"
-            Install-Module -Name SharePointPnPPowerShellOnline -Force -Verbose -Scope CurrentUser
-            $encpassword = convertto-securestring -String ${password} -AsPlainText -Force
-            $cred = new-object -typename System.Management.Automation.PSCredential -argumentlist ${username}, $encpassword
-            Write-Output "Connecting to SharePoint Online. Site Url: ${siteUrl}, Username: ${username}"
-            Connect-PnPOnline -Url ${siteUrl} -Credentials $cred
-            Write-Output "Connected."
-            $appId = Add-PnPApp -Path ${appFilePath} ${overwrite} ${skipFeatureDeployment} -Scope ${scope} -Publish
-            Write-Output "App $($appId.Id) deployed."`;
+            const script = `$ErrorActionPreference = "Stop";
+            $WarningPreference = "SilentlyContinue";
+            Install-Module -Name PnP.PowerShell -Force -Verbose -Scope CurrentUser;
+            Connect-PnPOnline -Url ${adminUrl} -ClientId ${clientID} -ClientSecret ${clientSecret};
+            (Get-PnPConnection).Url | Write-Output;`;
             yield PowerShellToolRunner_1.default.executePowerShellScriptBlock(script);
-            core.info("✅ App deployment successful.");
+            core.info("✅ Something is successful.");
         }
         catch (err) {
             core.error("🚨 Some error occurred");
