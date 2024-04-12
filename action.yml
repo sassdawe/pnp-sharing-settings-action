@@ -1,0 +1,18 @@
+name: 'PnP PowerShell Sharing Settings as Code'
+description: 'Define and enforce SharePoint Online sharing settings with GitHub Actions'
+inputs:
+  SHAREPOINT_ADMIN_URL:
+    description: 'URL of the SharePoint Admin Site'
+    required: true
+  CLIENT_ID:
+    description: 'Username of the admin'
+    required: true
+  CLIENT_SECRET:
+    description: 'Password of the admin'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'download'  
+  color: 'blue'
