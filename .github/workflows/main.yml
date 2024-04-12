@@ -1,0 +1,18 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: pnp-sharing-settings-action
+        uses: ./ # Uses an action in the root directory
+        id: hello
+        with:
+          SHAREPOINT_ADMIN_URLt: 'https://kolislabio-admin.sharepoint.com'
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
