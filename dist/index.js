@@ -1351,7 +1351,8 @@ function main() {
             $WarningPreference = "SilentlyContinue";
             Install-Module -Name PnP.PowerShell -Force -Verbose -Scope CurrentUser;
             Connect-PnPOnline -Url ${adminUrl} -ClientId ${clientID} -ClientSecret ${clientSecret};
-            (Get-PnPConnection).Url | Write-Output;`;
+            Get-PnPTenantSite | ft Url, Template, LocaleId, SharingCapability | Write-Output;`;
+
             yield PowerShellToolRunner_1.default.executePowerShellScriptBlock(script);
             core.info("✅ Something is successful.");
         }
