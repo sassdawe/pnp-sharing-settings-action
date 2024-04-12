@@ -13,15 +13,19 @@ inputs:
   SharingCapability_Disabled_Sites:
     description: 'Disable sharing capability'
     required: false
+    default: 'null'
   SharingCapability_ExternalUserSharingOnly_Sites:
     description: 'Enable sharing capability for external users only'
     required: false
+    default: 'null'
   SharingCapability_ExternalUserAndGuestSharing_Sites:
     description: 'Enable sharing capability for external users and guests'
     required: false
+    default: 'null'
   SharingCapability_ExistingExternalUserSharingOnly_Sites:
     description: 'Enable sharing capability for existing external users only'
     required: false
+    default: 'null'
 runs:
   using: 'node12'
   main: 'dist/index.js'
