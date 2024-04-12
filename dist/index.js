@@ -1343,7 +1343,7 @@ function main() {
             const sharingCapabilityExternalUserSharingOnly = core.getInput("SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES", { required: false });
             const sharingCapabilityExternalUserSharingOnlySites = sharingCapabilityExternalUserSharingOnly ? sharingCapabilityExternalUserSharingOnly.split(",") : [];
             const sharingCapabilityExternalAndGuestSharing = core.getInput("SHARINGCAPABILITY_EXTERNALANDGUESTSHARING_SITES", { required: false });
-            const sharingCapabilityExternalAndGuestSharingSites = SharingCapabilityExternalAndGuestSharing ? SharingCapabilityExternalAndGuestSharing.split(",") : [];
+            const sharingCapabilityExternalAndGuestSharingSites = sharingCapabilityExternalAndGuestSharing ? sharingCapabilityExternalAndGuestSharing.split(",") : [];
             const sharingCapabilityExistingExternalUserSharingOnly = core.getInput("SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES", { required: false });
             const sharingCapabilityExistingExternalUserSharingOnlySites = sharingCapabilityExistingExternalUserSharingOnly ? sharingCapabilityExistingExternalUserSharingOnly.split(",") : [];
 
