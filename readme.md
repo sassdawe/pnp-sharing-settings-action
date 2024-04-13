@@ -4,6 +4,8 @@
 
 This action signs in into SharePoint Online using ACS and sets the sharing settings for the site collections.
 
+> !Important: Only `windows` based runner can execute this action currently.
+
 ## Inputs
 
 ### `SHAREPOINT_ADMIN_URL`
