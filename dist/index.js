@@ -1373,10 +1373,22 @@ function main() {
             # Now lets check that only one parameter contains 'ALLELSE', and make sure that one will get executed last.
             $allCount = 0
 
-            if ($sharingCapabilityDisabledSites -icontains 'ALLELSE') { $allCount++; $allElse = 'Disabled'; $sharingOrderOfPrecedence.Remove('Disabled') }
-            if ($sharingCapabilityExternalUserSharingOnlySites -icontains 'ALLELSE') { $allCount++; $allElse = 'ExternalUserSharingOnly's; $sharingOrderOfPrecedence.Remove('ExternalUserSharingOnly') }
-            if ($sharingCapabilityExternalUserAndGuestSharingSites -icontains 'ALLELSE') { $allCount++; $allElse = 'ExternalUserAndGuestSharing; $sharingOrderOfPrecedence.Remove('ExternalUserAndGuestSharing') }
-            if ($sharingCapabilityExistingExternalUserSharingOnlySites -icontains 'ALLELSE') { $allCount++; $allElse = 'ExistingExternalUserSharingOnly'; $sharingOrderOfPrecedence.Remove('ExistingExternalUserSharingOnly')}
+            if ($sharingCapabilityDisabledSites -icontains 'ALLELSE') {
+                $allCount++; $allElse = 'Disabled';
+                $sharingOrderOfPrecedence.Remove('Disabled')
+            }
+            if ($sharingCapabilityExternalUserSharingOnlySites -icontains 'ALLELSE') {
+                $allCount++; $allElse = 'ExternalUserSharingOnly';
+                $sharingOrderOfPrecedence.Remove('ExternalUserSharingOnly')
+            }
+            if ($sharingCapabilityExternalUserAndGuestSharingSites -icontains 'ALLELSE') {
+                $allCount++; $allElse = 'ExternalUserAndGuestSharing';
+                $sharingOrderOfPrecedence.Remove('ExternalUserAndGuestSharing')
+            }
+            if ($sharingCapabilityExistingExternalUserSharingOnlySites -icontains 'ALLELSE') {
+                $allCount++; $allElse = 'ExistingExternalUserSharingOnly';
+                $sharingOrderOfPrecedence.Remove('ExistingExternalUserSharingOnly')
+            }
 
             if ($allCount -le 1) {
                 Write-Output "✅ Only one parameter contains 'ALLELSE'";
