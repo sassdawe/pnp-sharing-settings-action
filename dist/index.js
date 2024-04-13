@@ -1340,7 +1340,7 @@ function main() {
             const clientSecret = core.getInput("CLIENT_SECRET", { required: true });
             const sharingCapabilityDisabled = core.getInput("SHARINGCAPABILITY_DISABLED_SITES", { required: false });
             const sharingCapabilityExternalUserSharingOnly = core.getInput("SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES", { required: false });
-            const sharingCapabilityExternalAndGuestSharing = core.getInput("SHARINGCAPABILITY_EXTERNAUSERANDGUESTSHARING_SITES", { required: false });
+            const sharingCapabilityExternalUserAndGuestSharing = core.getInput("SHARINGCAPABILITY_EXTERNALUSERANDGUESTSHARING_SITES", { required: false });
             const sharingCapabilityExistingExternalUserSharingOnly = core.getInput("SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES", { required: false });
 
             core.info("ℹ️ Starting something...");
@@ -1354,25 +1354,25 @@ function main() {
             $sharingCapabilityExternalUserSharingOnlySites = if ( 'null' -ne '${sharingCapabilityExternalUserSharingOnly}' ) { '${sharingCapabilityExternalUserSharingOnly}'.split(",").trim() } else { @() };
             "To ExternalUserSharingOnly site count: $($sharingCapabilityExternalUserSharingOnlySites.count)" | Write-Output;
 
-            $sharingCapabilityExternalAndGuestSharingSites = if ( 'null' -ne '${sharingCapabilityExternalAndGuestSharing}' ) { '${sharingCapabilityExternalAndGuestSharing}'.split(",").trim() } else { @() };
-            "To ExternalAndGuestSharing site count: $($sharingCapabilityExternalAndGuestSharingSites.count)" | Write-Output;
+            $sharingCapabilityExternalUserAndGuestSharingSites = if ( 'null' -ne '${sharingCapabilityExternalUserAndGuestSharing}' ) { '${sharingCapabilityExternalUserAndGuestSharing}'.split(",").trim() } else { @() };
+            "To ExternalAndGuestSharing site count: $($sharingCapabilityExternalUserAndGuestSharingSites.count)" | Write-Output;
 
             $sharingCapabilityExistingExternalUserSharingOnlySites = if ( 'null' -ne '${sharingCapabilityExistingExternalUserSharingOnly}' ) { '${sharingCapabilityExistingExternalUserSharingOnly}'.split(",").trim() } else { @() };
             "To ExistingExternalUserSharingOnly site count: $($sharingCapabilityExistingExternalUserSharingOnlySites.count)" | Write-Output;
 
             $sharingOrderofPrecedence = new-object 'System.Collections.Specialized.OrderedDictionary';
-            $sharingOrderofPrecedence.Add('EXTERNALANDGUESTSHARING', $sharingCapabilityExternalAndGuestSharingSites);
-            $sharingOrderofPrecedence.Add('EXTERNALUSERSHARINGONLY', $sharingCapabilityExternalUserSharingOnlySites);
-            $sharingOrderofPrecedence.Add('EXISTINGEXTERNALUSERSHARINGONLY', $sharingCapabilityExistingExternalUserSharingOnlySites);
-            $sharingOrderofPrecedence.Add('DISABLED', $sharingCapabilityDisabledSites);
+            $sharingOrderofPrecedence.Add('ExternalUserAndGuestSharing', $sharingCapabilityExternalUserAndGuestSharingSites);
+            $sharingOrderofPrecedence.Add('ExternalUserSharingOnly', $sharingCapabilityExternalUserSharingOnlySites);
+            $sharingOrderofPrecedence.Add('ExistingExternalUserSharingOnly', $sharingCapabilityExistingExternalUserSharingOnlySites);
+            $sharingOrderofPrecedence.Add('Disabled', $sharingCapabilityDisabledSites);
 
             # Now lets check that only one parameter contains 'ALLELSE', and make sure that one will get executed last.
             $allCount = 0
 
-            if ($sharingCapabilityDisabledSites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityDisabledSites; $sharingOrderofPrecedence.Remove('DISABLED') }
-            if ($sharingCapabilityExternalUserSharingOnlySites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExternalUserSharingOnlySites; $sharingOrderofPrecedence.Remove('EXTERNALUSERSHARINGONLY') }
-            if ($sharingCapabilityExternalAndGuestSharingSites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExternalAndGuestSharingSites; $sharingOrderofPrecedence.Remove('EXTERNALANDGUESTSHARING') }
-            if ($sharingCapabilityExistingExternalUserSharingOnlySites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExistingExternalUserSharingOnlySites; $sharingOrderofPrecedence.Remove('EXISTINGEXTERNALUSERSHARINGONLY')}
+            if ($sharingCapabilityDisabledSites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityDisabledSites; $sharingOrderofPrecedence.Remove('Disabled') }
+            if ($sharingCapabilityExternalUserSharingOnlySites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExternalUserSharingOnlySites; $sharingOrderofPrecedence.Remove('ExternalUserSharingOnly') }
+            if ($sharingCapabilityExternalUserAndGuestSharingSites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExternalUserAndGuestSharingSites; $sharingOrderofPrecedence.Remove('ExternalUserAndGuestSharing') }
+            if ($sharingCapabilityExistingExternalUserSharingOnlySites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExistingExternalUserSharingOnlySites; $sharingOrderofPrecedence.Remove('ExistingExternalUserSharingOnly')}
 
             if ($allCount -le 1) {
                 Write-Output "✅ Only one parameter contains 'ALLELSE' "
