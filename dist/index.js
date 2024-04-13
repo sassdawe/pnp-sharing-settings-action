@@ -1348,31 +1348,31 @@ function main() {
             const script = `$ErrorActionPreference = "Stop";
             $WarningPreference = "SilentlyContinue";
 
-            $sharingCapabilityDisabledSites = if ( 'null' -ne '${sharingCapabilityDisabled}' ) { '${sharingCapabilityDisabled}'.split(",").trim() } else { @() };
+            $sharingCapabilityDisabledSites = if ( 'null' -ne '${sharingCapabilityDisabled}' ) { '${sharingCapabilityDisabled}'.Split(",").Trim().TrimEnd('/').ToLower() } else { @() };
             "To Disable site count: $($sharingCapabilityDisabledSites.count)" | Write-Output;
 
-            $sharingCapabilityExternalUserSharingOnlySites = if ( 'null' -ne '${sharingCapabilityExternalUserSharingOnly}' ) { '${sharingCapabilityExternalUserSharingOnly}'.split(",").trim() } else { @() };
+            $sharingCapabilityExternalUserSharingOnlySites = if ( 'null' -ne '${sharingCapabilityExternalUserSharingOnly}' ) { '${sharingCapabilityExternalUserSharingOnly}'.Split(",").Trim().TrimEnd('/').ToLower() } else { @() };
             "To ExternalUserSharingOnly site count: $($sharingCapabilityExternalUserSharingOnlySites.count)" | Write-Output;
 
-            $sharingCapabilityExternalUserAndGuestSharingSites = if ( 'null' -ne '${sharingCapabilityExternalUserAndGuestSharing}' ) { '${sharingCapabilityExternalUserAndGuestSharing}'.split(",").trim() } else { @() };
+            $sharingCapabilityExternalUserAndGuestSharingSites = if ( 'null' -ne '${sharingCapabilityExternalUserAndGuestSharing}' ) { '${sharingCapabilityExternalUserAndGuestSharing}'.Split(",").Trim().TrimEnd('/').ToLower() } else { @() };
             "To ExternalAndGuestSharing site count: $($sharingCapabilityExternalUserAndGuestSharingSites.count)" | Write-Output;
 
-            $sharingCapabilityExistingExternalUserSharingOnlySites = if ( 'null' -ne '${sharingCapabilityExistingExternalUserSharingOnly}' ) { '${sharingCapabilityExistingExternalUserSharingOnly}'.split(",").trim() } else { @() };
+            $sharingCapabilityExistingExternalUserSharingOnlySites = if ( 'null' -ne '${sharingCapabilityExistingExternalUserSharingOnly}' ) { '${sharingCapabilityExistingExternalUserSharingOnly}'.Split(",").Trim().TrimEnd('/').ToLower() } else { @() };
             "To ExistingExternalUserSharingOnly site count: $($sharingCapabilityExistingExternalUserSharingOnlySites.count)" | Write-Output;
 
-            $sharingOrderofPrecedence = new-object 'System.Collections.Specialized.OrderedDictionary';
-            $sharingOrderofPrecedence.Add('ExternalUserAndGuestSharing', $sharingCapabilityExternalUserAndGuestSharingSites);
-            $sharingOrderofPrecedence.Add('ExternalUserSharingOnly', $sharingCapabilityExternalUserSharingOnlySites);
-            $sharingOrderofPrecedence.Add('ExistingExternalUserSharingOnly', $sharingCapabilityExistingExternalUserSharingOnlySites);
-            $sharingOrderofPrecedence.Add('Disabled', $sharingCapabilityDisabledSites);
+            $sharingOrderOfPrecedence = new-object 'System.Collections.Specialized.OrderedDictionary';
+            $sharingOrderOfPrecedence.Add('ExternalUserAndGuestSharing', $sharingCapabilityExternalUserAndGuestSharingSites);
+            $sharingOrderOfPrecedence.Add('ExternalUserSharingOnly', $sharingCapabilityExternalUserSharingOnlySites);
+            $sharingOrderOfPrecedence.Add('ExistingExternalUserSharingOnly', $sharingCapabilityExistingExternalUserSharingOnlySites);
+            $sharingOrderOfPrecedence.Add('Disabled', $sharingCapabilityDisabledSites);
 
             # Now lets check that only one parameter contains 'ALLELSE', and make sure that one will get executed last.
             $allCount = 0
 
-            if ($sharingCapabilityDisabledSites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityDisabledSites; $sharingOrderofPrecedence.Remove('Disabled') }
-            if ($sharingCapabilityExternalUserSharingOnlySites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExternalUserSharingOnlySites; $sharingOrderofPrecedence.Remove('ExternalUserSharingOnly') }
-            if ($sharingCapabilityExternalUserAndGuestSharingSites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExternalUserAndGuestSharingSites; $sharingOrderofPrecedence.Remove('ExternalUserAndGuestSharing') }
-            if ($sharingCapabilityExistingExternalUserSharingOnlySites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExistingExternalUserSharingOnlySites; $sharingOrderofPrecedence.Remove('ExistingExternalUserSharingOnly')}
+            if ($sharingCapabilityDisabledSites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityDisabledSites; $sharingOrderOfPrecedence.Remove('Disabled') }
+            if ($sharingCapabilityExternalUserSharingOnlySites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExternalUserSharingOnlySites; $sharingOrderOfPrecedence.Remove('ExternalUserSharingOnly') }
+            if ($sharingCapabilityExternalUserAndGuestSharingSites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExternalUserAndGuestSharingSites; $sharingOrderOfPrecedence.Remove('ExternalUserAndGuestSharing') }
+            if ($sharingCapabilityExistingExternalUserSharingOnlySites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExistingExternalUserSharingOnlySites; $sharingOrderOfPrecedence.Remove('ExistingExternalUserSharingOnly')}
 
             if ($allCount -le 1) {
                 Write-Output "✅ Only one parameter contains 'ALLELSE' "
@@ -1386,7 +1386,7 @@ function main() {
 
             Write-Output "🚀 Start to update the sharing capability for the sites";
 
-            foreach ($sharingCapability in $sharingOrderofPrecedence.GetEnumerator()) {
+            foreach ($sharingCapability in $sharingOrderOfPrecedence.GetEnumerator()) {
                 $sharingCapabilityName = $sharingCapability.Key;
                 $sites = $sharingCapability.Value;
                 if ($sites -ne $null -and $sites.Count -gt 0) {
@@ -1401,8 +1401,9 @@ function main() {
 
             if ($allCount -eq 1) {
                 # Get All sites, and filter out the sites that are already updated.
-                $allSites = Get-PnPTenantSite | Select-Object -ExpandProperty url;
-                $sitesToUpdate = $allSites | Where-Object { $(try{-not $sharingOrderofPrecedence[0].contains($_)}catch{$false}) -and $(try{-not $sharingOrderofPrecedence[1].contains($_)}catch{$false}) -and $(try{-not $sharingOrderofPrecedence[2].contains($_)}catch{$false}) };
+                $allSites = (Get-PnPTenantSite | select -ExpandProperty url).ToLower()
+                Write-Output "All sites count: $($allSites.count)";
+                $sitesToUpdate = $allSites | Where-Object { $(try{-not $sharingOrderOfPrecedence[0].contains($_)}catch{$false}) -and $(try{-not $sharingOrderOfPrecedence[1].contains($_)}catch{$false}) -and $(try{-not $sharingOrderOfPrecedence[2].contains($_)}catch{$false}) };
                 Write-output "Remaining sites to update: $($sitesToUpdate.count)";
                 foreach ($site in $sitesToUpdate) {
                     Write-Output "🚀 Start to update the sharing capability for the site: $site";
