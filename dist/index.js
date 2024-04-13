@@ -1401,6 +1401,10 @@ function main() {
             Connect-PnPOnline -Url ${adminUrl} -ClientId ${clientID} -ClientSecret ${clientSecret};
             Get-PnPTenantSite | ft Url, Template, LocaleId, SharingCapability | Write-Output;
 
+            $sitesAsSet = New-Object System.Collections.Generic.HashSet[string]
+            Get-PnPTenantSite | foreach-object{ $null = $sitesAsSet.add($_.url.ToLower().TrimEnd('/'))) }
+            Write-Output "All sites count: $($sitesAsSet.count)";
+
             Write-Output "🚀 Start to update the sharing capability for the sites";
 
             foreach ($sharingCapability in $sharingOrderOfPrecedence.GetEnumerator()) {
@@ -1411,6 +1415,7 @@ function main() {
                     foreach ($site in $sites) {
                         Write-Output "🚀🚀 Start to update the sharing capability for the site: $site";
                         Set-PnPTenantSite -Url $site -SharingCapability $sharingCapabilityName -ErrorAction Continue;
+                        $null = $sitesAsSet.Remove($site);
                         Write-Output "✅ Sharing capability updated for the site: $site";
                     }
                 }
@@ -1418,11 +1423,8 @@ function main() {
 
             if ($allCount -eq 1) {
                 # Get All sites, and filter out the sites that are already updated.
-                $allSites = (Get-PnPTenantSite | select -ExpandProperty url).ToLower().TrimEnd('/')
-                Write-Output "All sites count: $($allSites.count)";
-                $sitesToUpdate = $allSites | Where-Object { $(try{-not $sharingOrderOfPrecedence[0].contains($_)}catch{$false}) -and $(try{-not $sharingOrderOfPrecedence[1].contains($_)}catch{$false}) -and $(try{-not $sharingOrderOfPrecedence[2].contains($_)}catch{$false}) };
-                Write-output "Remaining sites to update: $($sitesToUpdate.count)";
-                foreach ($site in $sitesToUpdate) {
+                Write-output "Remaining sites to update: $($sitesAsSet.count)";
+                foreach ($site in $sitesAsSet) {
                     Write-Output "🚀🚀 Start to update the sharing capability for the site: $site";
                     Set-PnPTenantSite -Url $site -SharingCapability $allElse -ErrorAction Continue;
                     Write-Output "✅ Sharing capability updated for the site: $site";
