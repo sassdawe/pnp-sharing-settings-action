@@ -10,19 +10,19 @@ inputs:
   CLIENT_SECRET:
     description: 'Password of the admin'
     required: true
-  SharingCapability_Disabled_Sites:
+  SHARINGCAPABILITY_DISABLED_SITES:
     description: 'Comma separated list of URLS where to disable sharing capability, could also be "null" to skip this setting, or "ALL" to disable sharing capability on all sites not specified in the other settings'
     required: false
     default: 'null'
-  SharingCapability_ExternalUserSharingOnly_Sites:
+  SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES:
     description: 'Comma separated list of URLS where to enable sharing capability for external users only, could also be "null" to skip this setting, or "ALL" to enable sharing capability for external users only on all sites not specified in the other settings'
     required: false
     default: 'null'
-  SharingCapability_ExternalUserAndGuestSharing_Sites:
+  SHARINGCAPABILITY_EXTERNALUSERANDGUESTSHARING_SITES:
     description: 'Comma separated list of URLS where to enable sharing capability for both external users and guests, could also be "null" to skip this setting, or "ALL" to enable sharing capability for both external users and guests on all sites not specified in the other settings'
     required: false
     default: 'null'
-  SharingCapability_ExistingExternalUserSharingOnly_Sites:
+  SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES:
     description: 'Comma separated list of URLS where to enable sharing capability for existing external users only, could also be "null" to skip this setting, or "ALL" to enable sharing capability for existing external users only on all sites not specified in the other settings'
     required: false
     default: 'null'
