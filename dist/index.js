@@ -1402,7 +1402,7 @@ function main() {
             if ($allCount -eq 1) {
                 # Get All sites, and filter out the sites that are already updated.
                 $allSites = Get-PnPTenantSite | Select-Object -ExpandProperty url;
-                $sitesToUpdate = $allSites | Where-Object { (try{-not $sharingOrderofPrecedence[0].contains($_)}catch{$false}) -and (try{-not $sharingOrderofPrecedence[1].contains($_)}catch{$false}) -and (try{-not $sharingOrderofPrecedence[2].contains($_)}catch{$false}) };
+                $sitesToUpdate = $allSites | Where-Object { $(try{-not $sharingOrderofPrecedence[0].contains($_)}catch{$false}) -and $(try{-not $sharingOrderofPrecedence[1].contains($_)}catch{$false}) -and $(try{-not $sharingOrderofPrecedence[2].contains($_)}catch{$false}) };
                 Write-output "Remaining sites to update: $($sitesToUpdate.count)";
                 foreach ($site in $sitesToUpdate) {
                     Write-Output "🚀 Start to update the sharing capability for the site: $site";
