@@ -1360,22 +1360,58 @@ function main() {
             $sharingCapabilityExistingExternalUserSharingOnlySites = if ( 'null' -ne '${sharingCapabilityExistingExternalUserSharingOnly}' ) { '${sharingCapabilityExistingExternalUserSharingOnly}'.split(",").trim() } else { @() };
             "To ExistingExternalUserSharingOnly site count: $($sharingCapabilityExistingExternalUserSharingOnlySites.count)" | Write-Output;
 
+            $sharingOrderofPrecedence = new-object 'System.Collections.Specialized.OrderedDictionary';
+            $sharingOrderofPrecedence.Add('EXTERNALANDGUESTSHARING', $sharingCapabilityExternalAndGuestSharingSites);
+            $sharingOrderofPrecedence.Add('EXTERNALUSERSHARINGONLY', $sharingCapabilityExternalUserSharingOnlySites);
+            $sharingOrderofPrecedence.Add('EXISTINGEXTERNALUSERSHARINGONLY', $sharingCapabilityExistingExternalUserSharingOnlySites);
+            $sharingOrderofPrecedence.Add('DISABLED', $sharingCapabilityDisabledSites);
+
+            # Now lets check that only one parameter contains 'ALLELSE', and make sure that one will get executed last.
             $allCount = 0
 
-            if ($sharingCapabilityDisabledSites -icontains 'ALL') { $allCount++ }
-            if ($sharingCapabilityExternalUserSharingOnlySites -icontains 'ALL') { $allCount++ }
-            if ($sharingCapabilityExternalAndGuestSharingSites -icontains 'ALL') { $allCount++ }
-            if ($sharingCapabilityExistingExternalUserSharingOnlySites -icontains 'ALL') { $allCount++ }
+            if ($sharingCapabilityDisabledSites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityDisabledSites; $sharingOrderofPrecedence.Remove('DISABLED') }
+            if ($sharingCapabilityExternalUserSharingOnlySites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExternalUserSharingOnlySites; $sharingOrderofPrecedence.Remove('EXTERNALUSERSHARINGONLY') }
+            if ($sharingCapabilityExternalAndGuestSharingSites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExternalAndGuestSharingSites; $sharingOrderofPrecedence.Remove('EXTERNALANDGUESTSHARING') }
+            if ($sharingCapabilityExistingExternalUserSharingOnlySites -icontains 'ALLELSE') { $allCount++; $allElse = $sharingCapabilityExistingExternalUserSharingOnlySites; $sharingOrderofPrecedence.Remove('EXISTINGEXTERNALUSERSHARINGONLY')}
 
             if ($allCount -le 1) {
-                Write-Output "✅ Only one parameter contains 'ALL' "
+                Write-Output "✅ Only one parameter contains 'ALLELSE' "
             } else {
-                Throw "More than one parameter contains 'ALL' this is not allowed, make sure that maximum only one parameter contains 'ALL'"
+                Throw "More than one parameter contains 'ALLELSE' this is not allowed, make sure that maximum only one parameter contains 'ALLELSE'"
             }
-
 
             Install-Module -Name SharePointPnPPowerShellOnline  -Force -Verbose -Scope CurrentUser;
             Connect-PnPOnline -Url ${adminUrl} -ClientId ${clientID} -ClientSecret ${clientSecret};
+            Get-PnPTenantSite | ft Url, Template, LocaleId, SharingCapability | Write-Output;
+
+            Write-Output "🚀 Start to update the sharing capability for the sites";
+
+            foreach ($sharingCapability in $sharingOrderofPrecedence.GetEnumerator()) {
+                $sharingCapabilityName = $sharingCapability.Key;
+                $sites = $sharingCapability.Value;
+                if ($sites -ne $null -and $sites.Count -gt 0) {
+                    Write-Output "🚀 Start to update the sharing capability for the sites with sharing capability: $sharingCapabilityName";
+                    foreach ($site in $sites) {
+                        Write-Output "🚀 Start to update the sharing capability for the site: $site";
+                        Set-PnPTenantSite -Url $site -SharingCapability $sharingCapabilityName -ErrorAction Continue;
+                        Write-Output "✅ Sharing capability updated for the site: $site";
+                    }
+                }
+            }
+
+            if ($allCount -eq 1) {
+                # Get All sites, and filter out the sites that are already updated.
+                $allSites = Get-PnPTenantSite | Select-Object -ExpandProperty url;
+                $sitesToUpdate = $allSites | Where-Object { (-not $sharingOrderofPrecedence[1].contains($_)) -and (-not $sharingOrderofPrecedence[2].contains($_)) -and (-not $sharingOrderofPrecedence[3].contains($_)) };
+                Write-output "Remaining sites to update: $($sitesToUpdate.count)";
+                foreach ($site in $sitesToUpdate) {
+                    Write-Output "🚀 Start to update the sharing capability for the site: $site";
+                    Set-PnPTenantSite -Url $site -SharingCapability $allElse -ErrorAction Continue;
+                    Write-Output "✅ Sharing capability updated for the site: $site";
+                }
+            }
+
+            Write-Output "✅ All sites are updated successfully";
             Get-PnPTenantSite | ft Url, Template, LocaleId, SharingCapability | Write-Output;
             `;
 

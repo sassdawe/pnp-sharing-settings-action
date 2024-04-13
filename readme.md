@@ -20,19 +20,19 @@ This action signs in into SharePoint Online and sets the sharing settings for th
 
 ### `SHARINGCAPABILITY_DISABLED_SITES`
 
-Comma separated list of URLS where to disable sharing capability, could also be "null" to skip this setting, or "ALL" to disable sharing capability on all sites not specified in the other settings.
+Comma separated list of URLS where to disable sharing capability, could also be "null" to skip this setting, or "ALLELSE" to disable sharing capability on all sites not specified in the other settings.
 
 ### `SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES`
 
-Comma separated list of URLS where to enable sharing capability for external users only, could also be "null" to skip this setting, or "ALL" to enable sharing capability for external users only on all sites not specified in the other settings.
+Comma separated list of URLS where to enable sharing capability for external users only, could also be "null" to skip this setting, or "ALLELSE" to enable sharing capability for external users only on all sites not specified in the other settings.
 
 ### `SHARINGCAPABILITY_EXTERNAUSERANDGUESTSHARING_SITES`
 
-Comma separated list of URLS where to enable sharing capability for external and guest users, could also be "null" to skip this setting, or "ALL" to enable sharing capability for external and guest users on all sites not specified in the other settings.
+Comma separated list of URLS where to enable sharing capability for external and guest users, could also be "null" to skip this setting, or "ALLELSE" to enable sharing capability for external and guest users on all sites not specified in the other settings.
 
 ### `SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES`
 
-Comma separated list of URLS where to enable sharing capability for existing external users only, could also be "null" to skip this setting, or "ALL" to enable sharing capability for existing external users only on all sites not specified in the other settings.
+Comma separated list of URLS where to enable sharing capability for existing external users only, could also be "null" to skip this setting, or "ALLELSE" to enable sharing capability for existing external users only on all sites not specified in the other settings.
 
 ## Outputs
 
@@ -47,7 +47,7 @@ with:
     CLIENT_ID: ${{ secrets.CLIENT_ID }}
     CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
     SHARINGCAPABILITY_DISABLED_SITES: 'https://contoso.sharepoint.com/, https://contoso.sharepoint.com/sites/Development'
-    SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES: 'ALL'
+    SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES: 'ALLELSE'
     SHARINGCAPABILITY_EXTERNAUSERANDGUESTSHARING_SITES: 'https://contoso.sharepoint.com/sites/HR, https://contoso.sharepoint.com/sites/bteam, https://contoso.sharepoint.com/sites/ateam'
     SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES: 'null'
 ```
