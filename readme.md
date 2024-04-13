@@ -1,8 +1,8 @@
-# pnp-sharing-settings-action
+# PnP PowerShell Sharing Settings as Code
 
 > credit goes to [aakashbhardwaj619](https://github.com/aakashbhardwaj619) as I built this action based on his work.
 
-This action signs in into SharePoint Online and sets the sharing settings for the site collections.
+This action signs in into SharePoint Online using ACS and sets the sharing settings for the site collections.
 
 ## Inputs
 
@@ -46,8 +46,8 @@ with:
     SHAREPOINT_ADMIN_URL: 'https://contoso-admin.sharepoint.com'
     CLIENT_ID: ${{ secrets.CLIENT_ID }}
     CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-    SHARINGCAPABILITY_DISABLED_SITES: 'https://contoso.sharepoint.com/, https://contoso.sharepoint.com/sites/Development'
-    SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES: 'ALLELSE'
+    SHARINGCAPABILITY_DISABLED_SITES: 'ALLELSE'
+    SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES: 'https://contoso.sharepoint.com/, https://contoso.sharepoint.com/sites/Development'
     SHARINGCAPABILITY_EXTERNAUSERANDGUESTSHARING_SITES: 'https://contoso.sharepoint.com/sites/HR, https://contoso.sharepoint.com/sites/bteam, https://contoso.sharepoint.com/sites/ateam'
     SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES: 'null'
 ```
