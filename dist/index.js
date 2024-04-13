@@ -1340,7 +1340,7 @@ function main() {
             const clientSecret = core.getInput("CLIENT_SECRET", { required: true });
             const sharingCapabilityDisabled = core.getInput("SHARINGCAPABILITY_DISABLED_SITES", { required: false });
             const sharingCapabilityExternalUserSharingOnly = core.getInput("SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES", { required: false });
-            const sharingCapabilityExternalAndGuestSharing = core.getInput("SHARINGCAPABILITY_EXTERNALANDGUESTSHARING_SITES", { required: false });
+            const sharingCapabilityExternalAndGuestSharing = core.getInput("SHARINGCAPABILITY_EXTERNAUSERANDGUESTSHARING_SITES", { required: false });
             const sharingCapabilityExistingExternalUserSharingOnly = core.getInput("SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES", { required: false });
 
             core.info("ℹ️ Starting something...");

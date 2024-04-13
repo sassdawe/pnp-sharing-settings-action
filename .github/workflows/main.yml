@@ -18,5 +18,5 @@ jobs:
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           SHARINGCAPABILITY_DISABLED_SITES: 'https://kolislabio.sharepoint.com/, https://kolislabio.sharepoint.com/sites/Development'
           SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES: 'ALL'
-          SHARINGCAPABILITY_EXTERNALANDGUESTSHARING_SITES: 'https://kolislabio.sharepoint.com/sites/HR, https://kolislabio.sharepoint.com/sites/bteam, https://kolislabio.sharepoint.com/sites/ateam'
+          SHARINGCAPABILITY_EXTERNAUSERANDGUESTSHARING_SITES: 'https://kolislabio.sharepoint.com/sites/HR, https://kolislabio.sharepoint.com/sites/bteam, https://kolislabio.sharepoint.com/sites/ateam'
           SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES: 'null'
