@@ -1,5 +1,5 @@
 name: 'PnP PowerShell Sharing Settings as Code'
-description: 'Define and enforce SharePoint Online sharing settings with GitHub Actions'
+description: 'Define and enforce SharePoint Online sharing settings with GitHub Actions. If "ALL" is used for any of the settings, it will apply to all sites which were NOT specified in the other settings. If "null" is used for any of the settings, it will skip that setting.'
 inputs:
   SHAREPOINT_ADMIN_URL:
     description: 'URL of the SharePoint Admin Site'
@@ -11,24 +11,24 @@ inputs:
     description: 'Password of the admin'
     required: true
   SharingCapability_Disabled_Sites:
-    description: 'Disable sharing capability'
+    description: 'Comma separated list of URLS where to disable sharing capability, could also be "null" to skip this setting, or "ALL" to disable sharing capability on all sites not specified in the other settings'
     required: false
     default: 'null'
   SharingCapability_ExternalUserSharingOnly_Sites:
-    description: 'Enable sharing capability for external users only'
+    description: 'Comma separated list of URLS where to enable sharing capability for external users only, could also be "null" to skip this setting, or "ALL" to enable sharing capability for external users only on all sites not specified in the other settings'
     required: false
     default: 'null'
   SharingCapability_ExternalUserAndGuestSharing_Sites:
-    description: 'Enable sharing capability for external users and guests'
+    description: 'Comma separated list of URLS where to enable sharing capability for both external users and guests, could also be "null" to skip this setting, or "ALL" to enable sharing capability for both external users and guests on all sites not specified in the other settings'
     required: false
     default: 'null'
   SharingCapability_ExistingExternalUserSharingOnly_Sites:
-    description: 'Enable sharing capability for existing external users only'
+    description: 'Comma separated list of URLS where to enable sharing capability for existing external users only, could also be "null" to skip this setting, or "ALL" to enable sharing capability for existing external users only on all sites not specified in the other settings'
     required: false
     default: 'null'
 runs:
-  using: 'node12'
+  using: 'node20'
   main: 'dist/index.js'
 branding:
-  icon: 'download'  
+  icon: 'download'
   color: 'blue'
