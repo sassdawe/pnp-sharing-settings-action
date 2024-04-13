@@ -3,7 +3,7 @@ on: [push]
 jobs:
   hello_world_job:
     runs-on: windows-latest
-    name: A job to say hello
+    name: Enforce SharePoint Online Sharing Settings
     steps:
       # To use this repository's private action,
       # you must check out the repository
@@ -11,12 +11,12 @@ jobs:
         uses: actions/checkout@v4
       - name: pnp-sharing-settings-action
         uses: ./ # Uses an action in the root directory
-        id: hello
+        id: SharingSettings
         with:
           SHAREPOINT_ADMIN_URL: 'https://kolislabio-admin.sharepoint.com'
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          SHARINGCAPABILITY_DISABLED_SITES: 'https://kolislabio.sharepoint.com/, https://kolislabio.sharepoint.com/sites/Development'
-          SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES: 'ALLELSE'
-          SHARINGCAPABILITY_EXTERNALUSERANDGUESTSHARING_SITES: 'https://kolislabio.sharepoint.com/sites/HR, https://kolislabio.sharepoint.com/sites/bteam, https://kolislabio.sharepoint.com/sites/ateam'
-          SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES: 'null'
+          SHARINGCAPABILITY_DISABLED_SITES: 'ALLELSE'
+          SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES: 'https://kolislabio.sharepoint.com/, https://kolislabio.sharepoint.com/sites/Development'
+          SHARINGCAPABILITY_EXTERNALUSERANDGUESTSHARING_SITES: 'https://kolislabio.sharepoint.com/sites/bteam, https://kolislabio.sharepoint.com/sites/ateam'
+          SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES: 'https://kolislabio.sharepoint.com/sites/HR'
