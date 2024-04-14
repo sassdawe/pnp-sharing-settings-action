@@ -4,7 +4,9 @@
 
 This action signs in into SharePoint Online using ACS and sets the sharing settings for the site collections.
 
-> !Important: Only `windows` based runner can execute this action currently.
+If `ALLELSE` is used for any of the settings (but only for **ONE** of them), it will apply that sharing capability to all the rest of the sites which were NOT specified in the other settings. If `null` is used for any of the settings, it will skip that setting.
+
+> !Important: The v1 version requires the use of **Windows** based runners to run this action currently.
 
 ## Inputs
 
@@ -43,7 +45,7 @@ There is no output for this action.
 ## Example usage
 
 ```yaml
-uses: actions/pnp-sharing-settings-action@e76147da8e5c81eaf017dede5645551d4b94427b
+uses: actions/pnp-sharing-settings-action@v1
 with:
     SHAREPOINT_ADMIN_URL: 'https://contoso-admin.sharepoint.com'
     CLIENT_ID: ${{ secrets.CLIENT_ID }}

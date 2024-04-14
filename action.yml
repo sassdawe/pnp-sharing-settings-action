@@ -1,14 +1,14 @@
 name: 'PnP PowerShell Sharing Settings as Code'
-description: 'Define and enforce SharePoint Online sharing settings with GitHub Actions. If "ALLELSE" is used for any of the settings (but only for ONE), it will apply to all sites which were NOT specified in the other settings. If "null" is used for any of the settings, it will skip that setting.'
+description: 'Define and enforce SharePoint Online sharing settings with GitHub Actions.'
 inputs:
   SHAREPOINT_ADMIN_URL:
     description: 'URL of the SharePoint Admin Site'
     required: true
   CLIENT_ID:
-    description: 'Username of the admin'
+    description: 'Client Id of App Registration with SharePoint Online permissions'
     required: true
   CLIENT_SECRET:
-    description: 'Password of the admin'
+    description: 'Client Secret of App Registration with SharePoint Online permissions'
     required: true
   SHARINGCAPABILITY_DISABLED_SITES:
     description: 'Comma separated list of URLS where to disable sharing capability. Or "null" or "ALLELSE".'
