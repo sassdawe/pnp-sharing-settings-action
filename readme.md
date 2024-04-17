@@ -1,10 +1,12 @@
 # PnP PowerShell Sharing Settings as Code V2
 
+> 🚩 Super Important: You should not use this action in public repostitories, as it will expose information of your SharePoint Online tenant to the public. This action is intended to be used in private repositories only.
+
 This v2 version of the action signs in into SharePoint Online using ACS and sets the sharing settings for the site collections.
 
 If `ALLELSE` is used for any of the settings (but only for **ONE** of them), it will apply that sharing capability to all the rest of the sites which were NOT specified in the other settings. If `null` is used for any of the settings, it will skip that setting.
 
-> !Important: The v2 version is using composite model, and can run on Windows, Linux and MacOS runners. The v1 version is using JavaScript model and can run only on Windows runners.
+> ⚠️ Important: The v2 version is using composite model, and can run on Windows, Linux and MacOS runners. The v1 version is using JavaScript model and can run only on Windows runners.
 
 ## Inputs
 
