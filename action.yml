@@ -50,10 +50,10 @@ runs:
             AdminUrl = ${{ inputs.SHAREPOINT_ADMIN_URL }}
             ClientId = ${{ inputs.CLIENT_ID }}
             ClientSecret = ${{ inputs.CLIENT_SECRET }}
-            SharingCapabilityDisabled = ${{ inputs.SHARINGCAPABILITY_DISABLED_SITES }}
-            SharingCapabilityExternalUserSharingOnly = ${{ inputs.SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES }}
-            SharingCapabilityExternalUserAndGuestSharing = ${{ inputs.SHARINGCAPABILITY_EXTERNALUSERANDGUESTSHARING_SITES }}
-            SharingCapabilityExistingExternalUserSharingOnly = ${{ inputs.SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES }}
+            SharingCapabilityDisabled = '${{ inputs.SHARINGCAPABILITY_DISABLED_SITES }}'s
+            SharingCapabilityExternalUserSharingOnly = '${{ inputs.SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES }}'
+            SharingCapabilityExternalUserAndGuestSharing = '${{ inputs.SHARINGCAPABILITY_EXTERNALUSERANDGUESTSHARING_SITES }}'
+            SharingCapabilityExistingExternalUserSharingOnly = '${{ inputs.SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES }}'
           }
 
           Write-Output "::Group::Trying to run stuff"
