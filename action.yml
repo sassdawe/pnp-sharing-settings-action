@@ -1,5 +1,11 @@
 name: 'PnP PowerShell Sharing Settings as Code'
+
 description: 'Define and enforce SharePoint Online sharing settings with GitHub Actions.'
+
+branding:
+  icon: 'briefcase'
+  color: 'blue'
+
 inputs:
   SHAREPOINT_ADMIN_URL:
     description: 'URL of the SharePoint Admin Site'
@@ -26,9 +32,43 @@ inputs:
     description: 'Comma separated list of URLS where to enable sharing capability for existing external users only. Or "null" or "ALLELSE".'
     required: false
     default: 'null'
+
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
-branding:
-  icon: 'briefcase'
-  color: 'blue'
+  using: "composite"
+  steps:
+    - shell: pwsh
+      id: SetSharingCapability
+      run: |
+        Write-Output "::group::My Awesome Function!"
+        Write-Output "::notice File=SetSharingSettings.ps1::Running script to enforce sharing settings!"
+        Write-Output "::endgroup::"
+
+        try {
+
+          # splat parameters
+          $inputParam = @{
+            AdminUrl = ${{ inputs.SHAREPOINT_ADMIN_URL }}
+            ClientId = ${{ inputs.CLIENT_ID }}
+            ClientSecret = ${{ inputs.CLIENT_SECRET }}
+            SharingCapabilityDisabled = ${{ inputs.SHARINGCAPABILITY_DISABLED_SITES }}
+            SharingCapabilityExternalUserSharingOnly = ${{ inputs.SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES }}
+            SharingCapabilityExternalUserAndGuestSharing = ${{ inputs.SHARINGCAPABILITY_EXTERNALUSERANDGUESTSHARING_SITES }}
+            SharingCapabilityExistingExternalUserSharingOnly = ${{ inputs.SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES }}
+          }
+
+          Write-Output "::Group::Trying to run stuff"
+          $res = & $env:GITHUB_ACTION_PATH\SetSharingSettings.ps1 @inputParam
+          
+          # Write to standard output
+          # Write-Output "::notice::Result: $($res -join ',')"
+          Write-Output "::endgroup::"
+
+          ## Set environment variables - works in the same job
+          # "IconsOutput=$($res -join ',')" >> $env:GITHUB_ENV
+          
+          ## Set output variables
+          #"IconResult=$($res -join ',')" >> $env:GITHUB_OUTPUT
+        }
+        catch {
+          Write-Output "::error file=SetSharingSettings.ps1::Failed to run!"
+        }
