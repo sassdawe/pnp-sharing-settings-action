@@ -6,7 +6,7 @@ param (
     [Parameter(Mandatory = $true)]
     [string] $clientID,
     [Parameter(Mandatory = $true)]
-    [string] $clientSecret.
+    [string] $clientSecret,
     [Parameter(Mandatory = $false)]
     [string] $sharingCapabilityDisabled,
     [Parameter(Mandatory = $false)]
