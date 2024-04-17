@@ -71,4 +71,5 @@ runs:
         }
         catch {
           Write-Output "::error file=SetSharingSettings.ps1::Failed to run!"
+          Write-Output "$_"
         }
