@@ -1,12 +1,10 @@
-# PnP PowerShell Sharing Settings as Code
+# PnP PowerShell Sharing Settings as Code V2
 
-> credit goes to [aakashbhardwaj619](https://github.com/aakashbhardwaj619) as I built this action based on his work.
-
-This action signs in into SharePoint Online using ACS and sets the sharing settings for the site collections.
+This v2 version of the action signs in into SharePoint Online using ACS and sets the sharing settings for the site collections.
 
 If `ALLELSE` is used for any of the settings (but only for **ONE** of them), it will apply that sharing capability to all the rest of the sites which were NOT specified in the other settings. If `null` is used for any of the settings, it will skip that setting.
 
-> !Important: The v1 version requires the use of **Windows** based runners to run this action currently.
+> !Important: The v2 version is using composite model, and can run on Windows, Linux and MacOS runners. The v1 version is using JavaScript model and can run only on Windows runners.
 
 ## Inputs
 
@@ -45,7 +43,8 @@ There is no output for this action.
 ## Example usage
 
 ```yaml
-uses: actions/pnp-sharing-settings-action@v1
+name: PnP PowerShell Sharing Settings as Code
+uses: sassdawe/pnp-sharing-settings-action@v2
 with:
     SHAREPOINT_ADMIN_URL: 'https://contoso-admin.sharepoint.com'
     CLIENT_ID: ${{ secrets.CLIENT_ID }}
@@ -55,3 +54,9 @@ with:
     SHARINGCAPABILITY_EXTERNAUSERANDGUESTSHARING_SITES: 'https://contoso.sharepoint.com/sites/HR, https://contoso.sharepoint.com/sites/bteam, https://contoso.sharepoint.com/sites/ateam'
     SHARINGCAPABILITY_EXISTINGEXTERNALUSERSHARINGONLY_SITES: 'null'
 ```
+
+## Information how to set up ACS for SharePoint Online
+
+The steps are documented at [PnP PowerShell: Connect-PnPOnline using ClientID and ClientSecret](https://www.sharepointdiary.com/2019/03/connect-pnponline-with-appid-and-appsecret.html)
+
+You can use an Entra ID App as well, but you need to grant it access to SharePoint Online using **step 2** from this ⬆️ blog.

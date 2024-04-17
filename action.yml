@@ -57,15 +57,15 @@ runs:
           }
 
           Write-Output "::Group::Trying to run stuff"
-          $res = & $env:GITHUB_ACTION_PATH\SetSharingSettings.ps1 @inputParam
-          
+          & $env:GITHUB_ACTION_PATH\SetSharingSettings.ps1 @inputParam | Write-Output
+
           # Write to standard output
           # Write-Output "::notice::Result: $($res -join ',')"
           Write-Output "::endgroup::"
 
           ## Set environment variables - works in the same job
           # "IconsOutput=$($res -join ',')" >> $env:GITHUB_ENV
-          
+
           ## Set output variables
           #"IconResult=$($res -join ',')" >> $env:GITHUB_OUTPUT
         }
