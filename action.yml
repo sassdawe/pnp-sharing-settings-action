@@ -47,9 +47,9 @@ runs:
 
           # splat parameters
           $inputParam = @{
-            AdminUrl = '${{ inputs.SHAREPOINT_ADMIN_URL }}''
-            ClientId = '${{ inputs.CLIENT_ID }}''
-            ClientSecret = '${{ inputs.CLIENT_SECRET }}''
+            AdminUrl = '${{ inputs.SHAREPOINT_ADMIN_URL }}'
+            ClientId = '${{ inputs.CLIENT_ID }}'
+            ClientSecret = '${{ inputs.CLIENT_SECRET }}'
             SharingCapabilityDisabled = '${{ inputs.SHARINGCAPABILITY_DISABLED_SITES }}'
             SharingCapabilityExternalUserSharingOnly = '${{ inputs.SHARINGCAPABILITY_EXTERNALUSERSHARINGONLY_SITES }}'
             SharingCapabilityExternalUserAndGuestSharing = '${{ inputs.SHARINGCAPABILITY_EXTERNALUSERANDGUESTSHARING_SITES }}'
