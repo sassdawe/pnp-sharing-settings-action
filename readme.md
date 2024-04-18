@@ -1,6 +1,6 @@
 # PnP PowerShell Sharing Settings as Code
 
-This action signs in into SharePoint Online PnP PowerShell and sets the sharing capability for the specified site collections.
+This action signs in into SharePoint Online using PnP PowerShell and sets the sharing capability for the specified site collections.
 
 > ⚠️ **Important**: There are multiple versions of this action available. Please make sure you are using the correct version for your needs.
 
